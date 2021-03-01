@@ -127,6 +127,34 @@
 			"$2"
 		],
 		"description": "Create try and catch"
+	},	"fetch url": {
+		"prefix": "fetchSnip",
+		"body": [
+			"let url = `$1`;",
+				"try{",
+				"let resp = await fetch(url)",
+				"let data = await resp.json();",
+				"console.log(data);",
+				"}catch(err){",
+				"console.log(err);",
+				"alert(`There's a problem, try again later.`)",
+			  	"}",
+			"catch (err) {",
+				"console.log(err);",
+				"alert('Theres a problem try again later.')",
+			  "}",
+			"$2"
+		],
+		"description": "Create try and catch"
+	},	"useEffect": {
+		"prefix": "useEffectSnip",
+		"body": [
+			"useEffect( () => { ",
+				"$1",
+			"},[]);",
+			"$2"
+		],
+		"description": "Create useEffect Snip"
 	}
 
 
