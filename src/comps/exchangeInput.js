@@ -3,7 +3,6 @@ import './css/input.css';
 
 
 function ExchangeInput(props){
-    let doApi = props.doApi;
     let exAr= props.exAr;
     let [val, setVal] = useState("--");
     let FromRef = useRef();

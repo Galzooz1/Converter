@@ -59,7 +59,7 @@ function ExchangeBody(props){
                 </div>
             </div>
             <div className="bg-white rounded-3 col-lg-6 mx-auto border border-dark m-5">
-                <ExchangeInput doApi={doApi} exAr={exAr}/>
+                <ExchangeInput exAr={exAr}/>
             </div>
             <div>
                 <h3>{date}</h3>
