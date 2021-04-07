@@ -4,7 +4,8 @@ header{
     text-align: center;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 24px;
 }
 
 nav{

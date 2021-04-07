@@ -21,7 +21,7 @@ function ExchangeInput(props){
             setVal(((InputRef.current.value / FromRef.current.value) * ToRef.current.value).toFixed(2))
         }
         setMyInput(InputRef.current.value);
-        document.querySelector(".test").style.display = "block";
+        document.querySelector(".result").style.display = "block";
         // setMyFrom(Object.keys(FromRef.current.value));
         // console.log(Object.keys(FromRef.current.value));
     }
@@ -67,7 +67,7 @@ function ExchangeInput(props){
             </div>
             </div>
             <button onClick={convert} className="btn btn-danger p-3 mt-4">Convert</button>
-            <div className="test text-start m-2" style={{display:'none',height:'50px'}}>
+            <div className="result text-start m-2" style={{display:'none',height:'50px'}}>
             <h4>{myInput} {myFrom} =</h4>
             <h3>{val}</h3>
             </div>
