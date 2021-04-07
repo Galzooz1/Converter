@@ -28,7 +28,7 @@ function ExchangeBody(props){
     }
         return(
         <main>
-            <div className="box col-lg-6 mx-auto">
+            {/* <div className="box col-lg-6 mx-auto">
                 <h2 className="text-primary">Current Rate by USD</h2>
                 <div className="rates">
                     <div className="change">
@@ -57,8 +57,8 @@ function ExchangeBody(props){
                     <h3></h3>
                     </div>
                 </div>
-            </div>
-            <div className="bg-white rounded-3 col-lg-6 mx-auto border border-dark m-5">
+            </div> */}
+            <div className="bg-white rounded-3 col-lg-10 mx-auto border border-dark m-5">
                 <ExchangeInput exAr={exAr}/>
             </div>
             <div>
