@@ -1,5 +1,14 @@
 .exInput{
     display: flex;
-    justify-content: space-evenly;
-    margin: 24px;
+    justify-content: space-between;
+    margin: 32px;
+}
+.from{
+    font-size: 1.8em;
+    font-weight: 200;
+}
+
+.to{
+    font-size: 2.4em;
+    font-weight: 500;
 }
