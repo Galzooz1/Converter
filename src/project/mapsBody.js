@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './css/body.css';
+import MapsMap from './mapsMap';
 
 
 function MapsBody(props){
-    let [mapsAr, setMapsAr] = useState({});
+    let [mapsAr, setMapsAr] = useState([]);
+    let searchRef = useRef();
     useEffect( () => { 
-    doApi();
+    let url = `https://restcountries.eu/rest/v2/name/israel`;
+    doApi(url);
     },[]);
     
-    const doApi = async() => {
-        let url = `https://restcountries.eu/rest/v2/alpha?codes=usa;isr;gb;fr;tha`;
+    const searchCountry = () => { 
+        let url = `https://restcountries.eu/rest/v2/name/`+searchRef.current.value;
+        doApi(url);
+    }
+
+    const doApi = async(url) => {
+        // let url = `https://restcountries.eu/rest/v2/all`;
         try{
         let resp = await fetch(url)
         let data = await resp.json();
@@ -26,11 +34,11 @@ function MapsBody(props){
         <main>
         <div className="container border border-dark bg-warning d-flex justify-content-between align-items-center">
             <div className="links p-2 d-flex justify-content-between col-lg-8">
-                {mapsAr.map(item => {
+                {/* {mapsAr.map(item => {
                     return(
                         <a href="#">{item.nativeName}</a>
                     )
-                })}
+                })} */}
                 {/* <a href="#">ISRAEL</a> |
                 <a href="#">UK</a> |
                 <a href="#">FRANCE</a> |
@@ -38,8 +46,8 @@ function MapsBody(props){
             </div>
             <div className="p-2 d-flex align-items-center">
                 <label className="form-label me-2">Search</label>
-                <input type="text" className="input shadow"/>
-                <button className="btn btn-primary ms-1">🔍</button>
+                <input ref={searchRef} type="text" className="input shadow"/>
+                <button onClick={searchCountry} className="btn btn-primary ms-1">🔍</button>
             </div>
         </div>
         <div className="bg-dark col-lg-8 mx-auto">
@@ -70,6 +78,7 @@ function MapsBody(props){
                  </div> */}
             </div>
         </div>
+        <MapsMap/>
         </main>
         </React.Fragment>
     )
