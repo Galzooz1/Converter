@@ -1,46 +1,29 @@
-import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React, { Component, useEffect, useState } from 'react';
+import { Map, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import data from '../assets/data';
+import Markers from './VenueMarkers';
 
-const containerStyle = {
-  width: '400px',
-  height: '400px'
-};
+function MapsMap (props) {
+  
+  let [currentLocation, setCurrentLocation] = useState({ lat:props.loc1 , lng: props.loc2 });
+  let [zoom, setZoom] = useState(7);
 
-const center = {
-  lat: -3.745,
-  lng: -38.523
-};
+  useEffect(()=>{
+      setCurrentLocation({ lat:props.loc1 , lng: props.loc2 });
+  }, [props.loc1, props.loc2])
 
-function MapsMap() {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "YOUR_API_KEY"
-  })
+    return (
+      <Map center={currentLocation} zoom={zoom}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+        />
+        
+        <Markers venues={data.venues}/>
+      </Map>
+    );
+  }
 
-  const [map, setMap] = React.useState(null)
 
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-
-  return isLoaded ? (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        { /* Child components, such as markers, info windows, etc. */ }
-        <></>
-      </GoogleMap>
-  ) : <></>
-}
-
-export default React.memo(MapsMap)
+export default MapsMap;
