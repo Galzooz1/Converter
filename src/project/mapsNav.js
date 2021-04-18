@@ -1,6 +1,4 @@
 import React, { useRef } from 'react';
-// import { useHistory } from 'react-router';
-// import { Link } from 'react-router-dom';
 import { Link,useHistory } from "react-router-dom"
 
 
@@ -11,7 +9,7 @@ function MapsNav(props){
         if(searchRef.current.value == ""){
             alert("Please enter Country name!")
         }else{
-            history.push("/country/"+ searchRef.current.value);
+            // history.push("/country/"+ searchRef.current.value);
             searchRef.current.value = "";
         }
     }
