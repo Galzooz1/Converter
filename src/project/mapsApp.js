@@ -1,6 +1,6 @@
 import React from 'react';
 import MapsBody from './mapsBody';
-import { BrowserRouter as Route, Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Route, Router, Switch, withRouter } from 'react-router-dom';
 import MapsNav from './mapsNav';
 
 function MapsApp() {
@@ -17,4 +17,4 @@ function MapsApp() {
   );
 }
 
-export default MapsApp;
+export default withRouter(MapsApp);
