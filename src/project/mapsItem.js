@@ -13,8 +13,8 @@ function MapsItem(props){
                 <h3 >{item.name}</h3>
                 <div >populatio: {item.population}</div>
                 <div >Region: {item.region}</div>
-                <div >Lenguage: {item.languages[0].iso639_2}, {item.languages[0].name} </div>
-                <div >Coin: {item.currencies[0].code}, {item.currencies[0].name}</div>
+                <div >Lenguage: {item.languages}, {item.languages.name} </div>
+                <div >Coin: {item.currencies.code}, {item.currencies.name}</div>
                 <div >Capital: {item.capital}</div>
             </div>
         </div>

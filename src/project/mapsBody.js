@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './css/body.css';
 import MapsItem from './mapsItem';
+import {doApiGet} from '../services/apiSer';
+
 
 function MapsBody(props){
     let [singleMap, setSingleMap] = useState(null);
@@ -16,12 +18,14 @@ function MapsBody(props){
             url= "https://restcountries.eu/rest/v2/alpha/"+props.match.params.countryCode;
         }
     }
-    doApi(url)
+    doApiGet(url)
     .then(data => {
         if(props.match.params.countryCode){
             setSingleMap(data);
+            console.log(data);
+            
         }else{
-            setSingleMap(data[0])
+            setSingleMap(data);
         }
     })
     .catch(err =>{
@@ -32,7 +36,7 @@ function MapsBody(props){
 
     useEffect( () => { 
     let url = "https://restcountries.eu/rest/v2/all";
-    doApi(url)
+    doApiGet(url)
         .then(data => {
             setMapsAr(data);
         })
