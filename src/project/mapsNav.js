@@ -5,12 +5,17 @@ import { Link,useHistory } from "react-router-dom"
 function MapsNav(props){
     let searchRef = useRef();
     let history = useHistory();
-    const searchCountry = () => { 
+    const searchCountry = () => {
         if(searchRef.current.value == ""){
             alert("Please enter Country name!")
         }else{
-            // history.push("/country/"+ searchRef.current.value);
+            history.push("/country/"+ searchRef.current.value);
             searchRef.current.value = "";
+        }
+    }
+    const searchEnter = (e) => { 
+        if(e.key === 'Enter'){
+            searchCountry();
         }
     }
     return(
@@ -30,7 +35,7 @@ function MapsNav(props){
             </div>
             <div className="p-2 d-flex align-items-center">
                 <label className="form-label m-1">Search</label>
-                <input ref={searchRef} type="text" className="input shadow" placeholder="Search..."/>
+                <input ref={searchRef} onKeyUp={searchEnter} type="text" className="input shadow" placeholder="Search..."/>
                 <button onClick={searchCountry} className="btn btn-primary ms-1">🔍</button>
             </div>
         </nav>
