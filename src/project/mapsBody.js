@@ -25,15 +25,8 @@ function MapsBody(props){
     }
     },[props.match]);
     
-    // const doApiLinks = (url) => {
-    //     fetch(url)
-    //     .then(resp => (resp.json()))
-    //     .then(data => {
-    //         setSingleMap(data[0])
-    //         console.log(singleMap);
-    //     }) 
-    // }
     const doApiLinks = async(url) => {
+        console.log(url);
         try{
         let resp = await fetch(url)
         let data = await resp.json();
@@ -97,7 +90,7 @@ function MapsBody(props){
         <React.Fragment>
         <main>
             {/* {(singleMap) && <MapsItem singleMap={singleMap} mapsAr={mapsAr}/> ? <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> : "Result Not Found"} */}
-            {(singleMap) && <MapsItem singleMap={singleMap}/>}
+            {(singleMap) && <MapsItem singleMap={singleMap} doApiLinks={doApiLinks}/>}
             {/* <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> */}
         </main>
         </React.Fragment>
