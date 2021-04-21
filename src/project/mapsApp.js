@@ -12,7 +12,7 @@ function MapsApp(props) {
       <Route exact path="/" component={MapsBody} />
       <Route exact path="/country/" component={MapsBody} />
       <Route exact path="/country/:name" component={MapsBody} />
-      <Route exact path="/country/:countryCode" component={MapsBody} />
+      <Route exact path="/code/:countryCode" component={MapsBody} />
       </Switch>
       </Router>
       </React.Fragment>

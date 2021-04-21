@@ -11,6 +11,8 @@ function MapsMap(props){
     let [zoom, setZoom] = useState(7);
     useEffect( () => { 
     setCurrenctLoc({lat:props.loc1 , lng: props.loc2})
+    console.log(currentLoc);
+    
     },[props.loc1, props.loc2]);
     
     return(

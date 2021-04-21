@@ -11,7 +11,7 @@ function MapsItem(props){
         <div>
         <div className="row col-lg-6 border mx-auto" >
             <img className="float-left mr-2" src={singleMap.flag} alt="Card image cap" height="150" />
-            <div className="float-left mr-2 pic" style={{ backgroundImage: `url(${singleMap.flag})` }}></div>
+            {/* <div className="float-left mr-2 pic" style={{ backgroundImage: `url(${singleMap.flag})` }}></div> */}
 
             <div className="col">
                 <h3 >{singleMap.name}</h3>
@@ -24,7 +24,7 @@ function MapsItem(props){
             <h3>States with borders: {(singleMap.borders).map(item => {
                 return(
                     <button className="btn btn-outline-info mt-2" onClick={()=>{
-                        // history.push("/country/"+item);
+                        history.push("/code/"+item);
                         props.doApiCode(String(item));
                     }}>{item}</button>
                 )
