@@ -24,8 +24,8 @@ function MapsItem(props){
             <h3>States with borders: {(singleMap.borders).map(item => {
                 return(
                     <button className="btn btn-outline-info mt-2" onClick={()=>{
-                        history.push("/country/"+item);
-                        props.doApiLinks(url+String(item));
+                        // history.push("/country/"+item);
+                        props.doApiCode(String(item));
                     }}>{item}</button>
                 )
             })}</h3>

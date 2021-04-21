@@ -6,8 +6,6 @@ import {doApiGet} from '../services/apiSer';
 
 function MapsBody(props){
     let [singleMap, setSingleMap] = useState();
-    // let [mapsAr, setMapsAr] = useState({});
-    // let [country, setCountry] = useState("Israel");
 
     useEffect( () => {
         let url = "https://restcountries.eu/rest/v2/name/Israel?fullText=true";
@@ -17,9 +15,9 @@ function MapsBody(props){
             url = "https://restcountries.eu/rest/v2/name/"+props.match.params.name+"?fullText=true";
             doApiLinks(url)
             console.log(props.match.params.name);
-        }else if(props.match.params.countryCode){
-            url = "https://restcountries.eu/rest/v2/alpha/"+props.match.params.countryCode;
-            doApiLinks(url);
+        }
+        else if(props.match.params.countryCode){
+            doApiCode(props.match.params.countryCode);
             console.log(props.match.params.countryCode);
         }
     }
@@ -39,6 +37,19 @@ function MapsBody(props){
         }
     }
 
+    const doApiCode = async(code) => { 
+        let url = "https://restcountries.eu/rest/v2/alpha/"+code;
+        try{
+        let resp = await fetch(url)
+        let data = await resp.json();
+        console.log(data);
+        setSingleMap(data);
+        }catch(err){
+        console.log(err);
+        alert(`There's a problem, try again later.`)
+        }
+        
+    }
 
     // useEffect( () => { 
     // let url = "https://restcountries.eu/rest/v2/name/"+country+"?fullText=true";
@@ -90,7 +101,7 @@ function MapsBody(props){
         <React.Fragment>
         <main>
             {/* {(singleMap) && <MapsItem singleMap={singleMap} mapsAr={mapsAr}/> ? <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> : "Result Not Found"} */}
-            {(singleMap) && <MapsItem singleMap={singleMap} doApiLinks={doApiLinks}/>}
+            {(singleMap) && <MapsItem singleMap={singleMap} doApiCode={doApiCode}/>}
             {/* <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> */}
         </main>
         </React.Fragment>
