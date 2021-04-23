@@ -1,0 +1,120 @@
+import React, { useEffect, useRef, useState } from 'react';
+import './css/body.css';
+import MapsItem from './mapsItem';
+
+
+function MapsBody(props){
+    let [singleMap, setSingleMap] = useState();
+    let [isLoading, setIsLoading] = useState({isLoading:true});
+    // const loader = document.querySelector('.loader');
+
+// if you want to show the loader when React loads data again
+    const showLoader = () => document.querySelector('.loader').classList.remove('loader--hide');
+
+    const hideLoader = () => document.querySelector('.loader').classList.add('loader--hide');
+    
+    useEffect( () => { 
+        let url = "https://restcountries.eu/rest/v2/name/Israel?fullText=true";
+        doApiLinks(url)
+
+        // document.querySelector(".loader").style.display = "none";
+        console.log("first run");
+        
+    },[]);
+    
+
+    useEffect( () => {
+        let url;
+        console.log("second run");
+        showLoader();
+        hideLoader();
+        // document.querySelector(".loader").style.display = "block";
+    if(props.match){
+        if(props.match.params.name){
+            url = "https://restcountries.eu/rest/v2/name/"+props.match.params.name+"?fullText=true";
+            doApiLinks(url)
+            console.log(props.match.params.name);
+        }
+        else if(props.match.params.countryCode){
+            doApiCode(props.match.params.countryCode);
+            console.log(props.match.params.countryCode);
+        }
+    }
+    },[props.match]);
+    
+    const doApiLinks = async(url) => {
+        console.log(url);
+        try{
+        let resp = await fetch(url)
+        let data = await resp.json();
+        console.log(data[0]);
+        setSingleMap(data[0]);
+        console.log(singleMap);
+        }catch(err){
+        console.log(err);
+        alert(`There's a problem, try again later.`)
+        }
+    }
+
+    const doApiCode = async(code) => { 
+        let url = "https://restcountries.eu/rest/v2/alpha/"+code;
+        try{
+        let resp = await fetch(url)
+        let data = await resp.json();
+        console.log(data);
+        setSingleMap(data);
+        }catch(err){
+        console.log(err);
+        alert(`There's a problem, try again later.`)
+        }
+        
+    }
+
+    return(
+        <React.Fragment>
+        <main>
+            {/* {(singleMap) && <MapsItem singleMap={singleMap} mapsAr={mapsAr}/> ? <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> : "Result Not Found"} */}
+            {/* {isLoading ?
+         <div id="app" className="loader">
+            <div className="sk-cube-grid">
+                <div className="sk-cube sk-cube1"></div>
+                 <div className="sk-cube sk-cube2"></div>
+                 <div className="sk-cube sk-cube3"></div>
+                 <div className="sk-cube sk-cube4"></div>
+                 <div className="sk-cube sk-cube5"></div>
+                 <div className="sk-cube sk-cube6"></div>
+                  <div className="sk-cube sk-cube7"></div>
+                 <div className="sk-cube sk-cube8"></div>
+                 <div className="sk-cube sk-cube9"></div>
+            </div>
+            </div>
+            :
+            <MapsItem singleMap={singleMap} doApiCode={doApiCode} />
+            } */}
+            <MapsItem singleMap={singleMap} doApiCode={doApiCode} />
+            {/* <div id="app" className="loader"></div> */}
+            <div id="app"></div>
+
+<div className="loader"></div>
+            {/* {(singleMap) ? <MapsItem singleMap={singleMap} doApiCode={doApiCode} /> :
+        <div id="app" className="loader">
+            <div className="sk-cube-grid">
+                <div className="sk-cube sk-cube1"></div>
+                 <div className="sk-cube sk-cube2"></div>
+                 <div className="sk-cube sk-cube3"></div>
+                 <div className="sk-cube sk-cube4"></div>
+                 <div className="sk-cube sk-cube5"></div>
+                 <div className="sk-cube sk-cube6"></div>
+                  <div className="sk-cube sk-cube7"></div>
+                 <div className="sk-cube sk-cube8"></div>
+                 <div className="sk-cube sk-cube9"></div>
+            </div>
+            </div>} */}
+
+            {/* <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> */}
+        </main>
+        </React.Fragment>
+    )
+}
+
+export default MapsBody
