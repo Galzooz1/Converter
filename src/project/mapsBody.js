@@ -58,7 +58,7 @@ function MapsBody(props){
         <React.Fragment>
         <main>
             {/* {(singleMap) && <MapsItem singleMap={singleMap} mapsAr={mapsAr}/> ? <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> : "Result Not Found"} */}
-            {(singleMap) ? <MapsItem singleMap={singleMap} doApiCode={doApiCode} /> : "blabla"}
+            {(singleMap) ? <MapsItem singleMap={singleMap} doApiCode={doApiCode} /> : <h2>Result not found!</h2>}
             {/* <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> */}
         </main>
         </React.Fragment>
