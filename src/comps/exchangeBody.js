@@ -55,7 +55,7 @@ function ExchangeBody(props){
                 <h3>{date.toLocaleTimeString()}</h3>
             </div>
         </main>
-            </React.Fragment>
+        </React.Fragment>
     )
 }
 
