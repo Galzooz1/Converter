@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './css/input.css';
+import ExchangeSelect from './exchangeSelect';
+import NumberFormat from 'react-number-format';
 
 
 function ExchangeInput(props){
@@ -11,14 +13,20 @@ function ExchangeInput(props){
     let FromRef = useRef();
     let ToRef = useRef();
     let InputRef = useRef();
+    let res;
+    let input;
     
     const convert = () => {
+        input = parseFloat(InputRef.current.value.replace(/,/g, ''));
         if(exAr[FromRef.current.value] == exAr.USDBTC || exAr[ToRef.current.value] == exAr.USDBTC){
-            setVal(((InputRef.current.value / exAr[FromRef.current.value]) * exAr[ToRef.current.value]).toFixed(7));
+            res = (input / exAr[FromRef.current.value]) * exAr[ToRef.current.value];
+            setVal(res.toLocaleString('en', {minimumFractionDigits: 7, maximumFractionDigits: 7}));
         }else{
-            setVal(((InputRef.current.value / exAr[FromRef.current.value]) * exAr[ToRef.current.value]).toFixed(2))
+            res = (input / exAr[FromRef.current.value]) * exAr[ToRef.current.value];
+            setVal(res.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
         }
-        setMyInput(InputRef.current.value);
+        input = InputRef.current.value;
+        setMyInput(input);
         setMyFrom(FromRef.current.value.substr(3));
         setMyTo(ToRef.current.value.substr(3));
         document.querySelector(".result").style.display = "block";
@@ -28,26 +36,22 @@ function ExchangeInput(props){
         temp = FromRef.current.value;
         FromRef.current.value = ToRef.current.value;
         ToRef.current.value = temp;
+        convert();
     }
     return(
         <React.Fragment>
-
         <div className="p-5">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
             <div className="col-lg-8 mx-auto">
                 <label>Amount</label>
-                 <input ref={InputRef} className="shadow form-control" type="number" defaultValue={exAr.USDUSD}/>
+                <NumberFormat getInputRef={InputRef} displayType={'input'} className="shadow form-control" thousandSeparator={true} defaultValue={exAr.USDUSD} renderText={(value, props) => <div {...props}>{value}</div>}/>
             </div>
             <div className="exInput">
 
             <div className="col-lg-4">
             <label>From</label>
-            <select ref={FromRef} className="d-block shadow form-select">
-                <option value={"USDUSD"}>USD - US Dollar</option>
-                <option value={"USDEUR"}>EUR - Euro</option>
-                <option value={"USDILS"}>ILS - Israeli Shekel</option>
-                <option value={"USDBTC"}>BTC - Bitcoin</option>
-                <option value={"USDTHB"}>THB - Thai Baht</option>
+            <select ref={FromRef} onChange={convert} className="d-block shadow form-select">
+                <ExchangeSelect/>
             </select>
             </div>
             <button onClick={replace} className="rounded-circle btn btn-dark shadow p-3">
@@ -55,12 +59,8 @@ function ExchangeInput(props){
             </button>
             <div className="col-lg-4">
                 <label>To</label>
-                <select ref={ToRef} className="d-block shadow form-select">
-                <option value={"USDUSD"}>USD - US Dollar</option>
-                <option value={"USDEUR"}>EUR - Euro</option>
-                <option value={"USDILS"}>ILS - Israeli Shekel</option>
-                <option value={"USDBTC"}>BTC - Bitcoin</option>
-                <option value={"USDTHB"}>THB - Thai Baht</option>
+                <select ref={ToRef} onChange={convert} className="d-block shadow form-select">
+                <ExchangeSelect/>
             </select>
             </div>
             </div>
