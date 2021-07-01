@@ -11,12 +11,15 @@ function ExchangeInput(props){
     let FromRef = useRef();
     let ToRef = useRef();
     let InputRef = useRef();
+    let res;
     
     const convert = () => {
         if(exAr[FromRef.current.value] == exAr.USDBTC || exAr[ToRef.current.value] == exAr.USDBTC){
-            setVal(((InputRef.current.value / exAr[FromRef.current.value]) * exAr[ToRef.current.value]).toFixed(7));
+            res = (InputRef.current.value / exAr[FromRef.current.value]) * exAr[ToRef.current.value];
+            setVal(res.toLocaleString('en', {minimumFractionDigits: 7, maximumFractionDigits: 7}));
         }else{
-            setVal(((InputRef.current.value / exAr[FromRef.current.value]) * exAr[ToRef.current.value]).toFixed(2))
+            res = (InputRef.current.value / exAr[FromRef.current.value]) * exAr[ToRef.current.value];
+            setVal(res.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
         }
         setMyInput(InputRef.current.value);
         setMyFrom(FromRef.current.value.substr(3));
@@ -28,6 +31,7 @@ function ExchangeInput(props){
         temp = FromRef.current.value;
         FromRef.current.value = ToRef.current.value;
         ToRef.current.value = temp;
+        convert();
     }
     return(
         <React.Fragment>
@@ -42,7 +46,7 @@ function ExchangeInput(props){
 
             <div className="col-lg-4">
             <label>From</label>
-            <select ref={FromRef} className="d-block shadow form-select">
+            <select ref={FromRef} onChange={convert} className="d-block shadow form-select">
                 <option value={"USDUSD"}>USD - US Dollar</option>
                 <option value={"USDEUR"}>EUR - Euro</option>
                 <option value={"USDILS"}>ILS - Israeli Shekel</option>
@@ -55,7 +59,7 @@ function ExchangeInput(props){
             </button>
             <div className="col-lg-4">
                 <label>To</label>
-                <select ref={ToRef} className="d-block shadow form-select">
+                <select ref={ToRef} onChange={convert} className="d-block shadow form-select">
                 <option value={"USDUSD"}>USD - US Dollar</option>
                 <option value={"USDEUR"}>EUR - Euro</option>
                 <option value={"USDILS"}>ILS - Israeli Shekel</option>

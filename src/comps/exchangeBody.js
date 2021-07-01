@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './css/body.css';
 import ExchangeInput from './exchangeInput';
+import Lottie from 'react-lottie';
+import animationData from '../lotties/exchange.json'
 
 
 
 function ExchangeBody(props){
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
     let [exAr, setExAr] = useState({});
     let [date, setDate] = useState(new Date());
     useEffect( () => { 
@@ -14,16 +24,12 @@ function ExchangeBody(props){
         clearInterval(timerID);
     }
     },[]);
-        // let today = new Date();
-        // let date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
-        // let clock = today.getHours() + ':' + (today.getMinutes()) /* + ':' + today.getSeconds()*/;
     
     const doApi = async() => {
         let url = `json/money.json`;
         try{
             let resp = await fetch(url)
             let data = await resp.json();
-            console.log(data.quotes);
             setExAr(data.quotes);
         }catch(err){
             console.log(err);
@@ -35,7 +41,12 @@ function ExchangeBody(props){
         <header className="bg-dark">
            <h1 className="text-info display-6">Wave Currency Converter App </h1>
         </header>
-        <main>
+        <main className="pt-4">
+        <Lottie 
+	    options={defaultOptions}
+        height={150}
+        width={150}
+      />
             <div className="bg-white rounded-3 col-lg-10 mx-auto border border-dark m-5">
                 <ExchangeInput exAr={exAr}/>
             </div>
