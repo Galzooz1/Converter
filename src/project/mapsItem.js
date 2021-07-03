@@ -5,7 +5,6 @@ import MapView from './Leaflet/MapView';
 function MapsItem(props){
     let history = useHistory();
     let singleMap = props.singleMap;
-    let url = "https://restcountries.eu/rest/v2/alpha/"
 
     return(
         <div>
@@ -20,12 +19,13 @@ function MapsItem(props){
                 <div >Language: {singleMap.languages[0].name} </div>
                 <div >Coin: {singleMap.currencies[0].code}, {singleMap.currencies[0].symbol}</div>
                 <div >Capital: {singleMap.capital}</div>
+                <div >lang: {singleMap.latlng[0]} loc2={singleMap.latlng[1]}</div>
             </div>
             <h3>States with borders: {(singleMap.borders).map(item => {
                 return(
                     <button className="btn btn-outline-info mt-2" onClick={()=>{
                         history.push("/code/"+item);
-                        props.doApiCode(String(item));
+                        // props.doApiCode(String(item));
                     }}>{item}</button>
                 )
             })}</h3>

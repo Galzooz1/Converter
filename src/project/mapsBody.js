@@ -1,18 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './css/body.css';
 import MapsItem from './mapsItem';
-import {doApiGet} from '../services/apiSer';
+import useFullPageLoader from './hooks/useFullPageLoader';
 
 
 function MapsBody(props){
     let [singleMap, setSingleMap] = useState();
     // let [isLoading, setIsLoading] = useState({isLoading:true});
+    let url;
 
-    useEffect( () => {
-        let url = "https://restcountries.eu/rest/v2/name/Israel?fullText=true";
+    const [loader, showLoader, hideLoader] = useFullPageLoader();
+    useEffect( () => { 
+        url = "https://restcountries.eu/rest/v2/name/Israel?fullText=true";
         doApiLinks(url)
-        // let url;
-        // setIsLoading({isLoading:false});
+    },[]);
+    useEffect( () => {
     if(props.match){
         if(props.match.params.name){
             url = "https://restcountries.eu/rest/v2/name/"+props.match.params.name+"?fullText=true";
@@ -23,17 +25,22 @@ function MapsBody(props){
             doApiCode(props.match.params.countryCode);
             console.log(props.match.params.countryCode);
         }
+        // doApiLinks(url)
     }
     },[props.match]);
     
+
+    
+
     const doApiLinks = async(url) => {
         console.log(url);
         try{
+        showLoader();
         let resp = await fetch(url)
         let data = await resp.json();
         console.log(data[0]);
+        hideLoader();
         setSingleMap(data[0]);
-        console.log(singleMap);
         }catch(err){
         console.log(err);
         alert(`There's a problem, try again later.`)
@@ -43,9 +50,11 @@ function MapsBody(props){
     const doApiCode = async(code) => { 
         let url = "https://restcountries.eu/rest/v2/alpha/"+code;
         try{
+        showLoader();
         let resp = await fetch(url)
         let data = await resp.json();
         console.log(data);
+        hideLoader();
         setSingleMap(data);
         }catch(err){
         console.log(err);
@@ -58,9 +67,10 @@ function MapsBody(props){
         <React.Fragment>
         <main>
             {/* {(singleMap) && <MapsItem singleMap={singleMap} mapsAr={mapsAr}/> ? <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> : "Result Not Found"} */}
-            {(singleMap) ? <MapsItem singleMap={singleMap} doApiCode={doApiCode} /> : <h2>Result not found!</h2>}
+            {(singleMap) ? <MapsItem singleMap={singleMap} doApiCode={doApiCode} /> : <h2 className="mt-5">Result not found!</h2>}
             {/* <MapsItem singleMap={singleMap} mapsAr={mapsAr} /> */}
         </main>
+        {loader}
         </React.Fragment>
     )
 }
