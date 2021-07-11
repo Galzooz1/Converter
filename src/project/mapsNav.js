@@ -1,6 +1,8 @@
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { useRef } from 'react';
 import { Link,useHistory } from "react-router-dom"
+import MapsSearch from './mapsSearch';
 
 
 function MapsNav(props){
@@ -19,14 +21,15 @@ function MapsNav(props){
             searchCountry();
         }
     }
+
     return(
         <header className="container-fluid bg-dark">
        <div className="container text-white d-flex align-items-center justify-content-around">
            <h1 className="text-info">Wave Country App</h1>
 
             <div className="p-2 d-flex align-items-center">
-                <label className="form-label m-1">Search</label>
-                <input ref={searchRef} onKeyUp={searchEnter} type="text" className="input shadow" placeholder="Search..."/>
+                {/* <MapsSearch searchCountry={searchCountry} searchEnter={searchEnter}/> */}
+                <input ref={searchRef} onKeyUp={searchEnter} type="text" className="input shadow form-control" placeholder="Search..."/>
                 <button onClick={searchCountry} className="btn btn-primary ms-1">🔍</button>
             </div>
         </div>
